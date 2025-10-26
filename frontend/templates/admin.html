@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Shop</title>
+</head>
+<body>
+  <h2>Add a New Shop</h2>
+  <form id="shopForm">
+    <label>Shop Name:</label>
+    <input type="text" id="name" required><br><br>
+    <label>Owner Name:</label>
+    <input type="text" id="owner" required><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    document.getElementById("shopForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        owner: document.getElementById("owner").value
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/add_shop", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          window.location.href = "/success";
+        } else {
+          document.getElementById("message").innerText = "Error: " + result.error;
+        }
+      } catch (err) {
+        document.getElementById("message").innerText = "Connection error: " + err;
+      }
+    });
+  </script>
+</body>
+</html>
