@@ -4,7 +4,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    return render_template('index.html')  # Updated template
+
+@app.route('/admin')
+def admin():
     return render_template('admin.html')
+
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
 
 @app.route('/success')
 def success():
